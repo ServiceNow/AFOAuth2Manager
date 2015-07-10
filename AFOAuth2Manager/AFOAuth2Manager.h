@@ -84,6 +84,12 @@
              clientID:(NSString *)clientID
                secret:(NSString *)secret;
 
+- (id)initWithBaseURL:(NSURL *)url
+             clientID:(NSString *)clientID
+               secret:(NSString *)secret
+        configuration:(NSURLSessionConfiguration *)sessionConfiguration;
+
+
 ///---------------------
 /// @name Authenticating
 ///---------------------

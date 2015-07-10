@@ -101,9 +101,18 @@ static NSError * AFErrorFromRFC6749Section5_2Error(id object) {
              clientID:(NSString *)clientID
                secret:(NSString *)secret
 {
-    NSParameterAssert(clientID);
+    return [self initWithBaseURL:url clientID:clientID secret:secret configuration:nil];
+}
 
-    self = [super initWithBaseURL:url];
+- (id)initWithBaseURL:(NSURL *)url
+             clientID:(NSString *)clientID
+               secret:(NSString *)secret
+        configuration:(NSURLSessionConfiguration *)sessionConfiguration
+{
+    NSParameterAssert(clientID);
+    
+    self = [super initWithBaseURL:url sessionConfiguration:sessionConfiguration];
+    
     if (!self) {
         return nil;
     }
@@ -111,9 +120,9 @@ static NSError * AFErrorFromRFC6749Section5_2Error(id object) {
     self.serviceProviderIdentifier = [self.baseURL host];
     self.clientID = clientID;
     self.secret = secret;
-
+    
     self.useHTTPBasicAuthentication = YES;
-
+    
     [self.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     
     return self;
