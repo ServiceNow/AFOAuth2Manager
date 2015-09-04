@@ -391,9 +391,11 @@ static NSError * AFErrorFromRFC6749Section5_2Error(id object) {
         status = SecItemAdd((__bridge CFDictionaryRef)queryDictionary, NULL);
     }
 
+#ifdef DEBUG
     if (status != errSecSuccess) {
         NSLog(@"Unable to %@ credential with identifier \"%@\" (Error %li)", exists ? @"update" : @"add", identifier, (long int)status);
     }
+#endif
 
     return (status == errSecSuccess);
 }
@@ -403,9 +405,11 @@ static NSError * AFErrorFromRFC6749Section5_2Error(id object) {
 
     OSStatus status = SecItemDelete((__bridge CFDictionaryRef)queryDictionary);
 
+#ifdef DEBUG
     if (status != errSecSuccess) {
         NSLog(@"Unable to delete credential with identifier \"%@\" (Error %li)", identifier, (long int)status);
     }
+#endif
 
     return (status == errSecSuccess);
 }
@@ -418,10 +422,12 @@ static NSError * AFErrorFromRFC6749Section5_2Error(id object) {
     CFDataRef result = nil;
     OSStatus status = SecItemCopyMatching((__bridge CFDictionaryRef)queryDictionary, (CFTypeRef *)&result);
 
+#ifdef DEBUG
     if (status != errSecSuccess) {
         NSLog(@"Unable to fetch credential with identifier \"%@\" (Error %li)", identifier, (long int)status);
         return nil;
     }
+#endif
 
     return [NSKeyedUnarchiver unarchiveObjectWithData:(__bridge_transfer NSData *)result];
 }
