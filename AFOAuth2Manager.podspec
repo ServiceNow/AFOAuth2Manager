@@ -12,9 +12,10 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.ios.deployment_target = '6.0'
+  s.watchos.deployment_target = '2.0'
   s.osx.deployment_target = '10.8'
 
-  s.dependency 'AFNetworking/NSURLConnection', '~>2.2'
+  s.dependency 'AFNetworking/NSURLSession', '~>2.6.1'
 
   s.ios.frameworks = 'Security'
 end
